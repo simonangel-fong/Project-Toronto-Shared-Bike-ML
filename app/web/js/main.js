@@ -113,3 +113,29 @@
   $go.addEventListener("click", forecast);
   init();
 })();
+
+/* Back to top.
+ *
+ * The bare href="#top" only jumps while the hash is something else - once the
+ * URL already ends in #top the browser treats a repeat click as a no-op, so
+ * the link goes dead after the first use. Scrolling explicitly keeps it
+ * working every time, and honours reduced-motion.
+ */
+(function () {
+  "use strict";
+
+  var link = document.querySelector('a[href="#top"]');
+  if (!link) return;
+
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+
+    // Keep the URL clean rather than leaving a #top the next click ignores.
+    if (window.history && history.replaceState) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  });
+})();

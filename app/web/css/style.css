@@ -388,21 +388,52 @@ section[id] {
 
 /* ---------- footer ---------- */
 
-.site-footer {
+footer {
   background-color: var(--surface);
   border-top: 1px solid var(--hairline);
-  padding: 2.5rem 0;
+  padding: 1.75rem 0;
   color: #9aa4b2;
-  font-size: 0.875rem;
+  font-size: .875rem;
 }
 
-.site-footer a {
+/* Credit left, back-to-top right; stacks and centres on narrow screens. */
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+}
+
+footer a {
   color: #9aa4b2;
   text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
 }
 
-.site-footer a:hover {
+footer a:hover,
+footer a:focus-visible {
   color: var(--brand);
+  border-bottom-color: currentColor;
+}
+
+/* The back-to-top link is an action, not prose - nudge it away from the
+   credit line and keep the arrow glued to the label. */
+.footer-inner a[href="#top"] {
+  white-space: nowrap;
+}
+
+.footer-inner a[href="#top"]::after {
+  content: " ↑";
+}
+
+@media (max-width: 575.98px) {
+  .footer-inner {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 /* ---------- error page ---------- */
